@@ -31,6 +31,22 @@ typedef struct Keyboard {
 } Keyboard;
 
 //Software
+typedef struct Planet
+{
+    SDL_Color   plaColor;
+
+    char        *plaName;
+    short       nbSite;
+};
+
+typedef struct System
+{
+    SDL_Color   sysColor;
+
+    char        *sysName;
+    short       nbPlanet;
+};
+
 typedef struct Map // next map ? 
 {
     SDL_Rect rectMax;
