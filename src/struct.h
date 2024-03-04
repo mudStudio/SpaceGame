@@ -31,37 +31,39 @@ typedef struct Keyboard {
 } Keyboard;
 
 //Software
-typedef struct Planet
+typedef struct AsObject
 {
-    SDL_Color   plaColor;
+    SDL_Color   asObjColor;
 
-    char        *plaName;
+    char        *asObjName;
     short       nbSite;
-};
+
+    AsObject    *prev;
+    AsObject    *next;
+
+} AsObject;
 
 typedef struct System
 {
     SDL_Color   sysColor;
 
     char        *sysName;
-    short       nbPlanet;
-};
+    short       nbAsObject;
+    AsObject    *listAsObject;
 
-typedef struct Map // next map ? 
+    System      *prev;
+    System      *next;
+
+} System;
+
+typedef struct UniversMap
 {
     SDL_Rect rectMax;
     SDL_Rect rect;
 
     char **Map;
     char *representation;
-} Map;
-
-typedef struct Dungeon
-{
-    Map **listMap; // database or hash, next ? 
-    Map *pActualMap;
-
-} Dungeon;
+} UniversMap;
 
 //Convergence
 typedef struct Game {
@@ -70,7 +72,7 @@ typedef struct Game {
     Mouse *pMouse;
     Keyboard *pKeyboard;
 
-    Dungeon *pDungeon;
+    UniversMap *pUniversMap;
 } Game;
 
 #endif // STRUCT_H_INCLUDED

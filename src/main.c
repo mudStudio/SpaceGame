@@ -55,13 +55,13 @@ int main(int argc, char** argv) {
 
     //free
     //free à refaire avec un len propre
-    for (int i = 0; i < pGame->pDungeon->pActualMap->rect.y; ++i)
+    for (int i = 0; i < pGame->UniversMap->rect.y; ++i)
     {
-        if(pGame->pDungeon->pActualMap->Map[i] != NULL)
-        free(pGame->pDungeon->pActualMap->Map[i]);
+        if(pGame->UniversMap->Map[i] != NULL)
+        free(pGame->UniversMap->Map[i]);
     }
-    if(pGame->pDungeon->pActualMap->Map != NULL)
-        free(pGame->pDungeon->pActualMap->Map);
+    if(pGame->UniversMap->Map != NULL)
+        free(pGame->UniversMap->Map);
 
     //End program
     SDL_DestroyRenderer(pGame->pRenderer);

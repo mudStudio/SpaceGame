@@ -17,11 +17,11 @@
 #define MAX_PLANET 7
 #define MIN_PLANET 0
 
-#define W_MAX 30
-#define H_MAX 30
+#define W_MAX 20
+#define H_MAX 20
 
-#define W_MIN W_MAX/2
-#define H_MIN H_MAX/2
+#define W_MIN 10
+#define H_MIN 10
 
 //
 

@@ -33,55 +33,45 @@ void Init(Game *pGame) {
         exit(EXIT_FAILURE);
     }
 
-    //Init Dungeon & Map
-    pGame->pDungeon = calloc(1, sizeof(Dungeon));
-    if (pGame->pDungeon == NULL){
+    //Init Map
+    pGame->UniversMap = calloc(1, sizeof(Dungeon));
+    if (pGame->UniversMap == NULL){
         fprintf(stderr, "ERROR : Init Dungeon failed.");
         exit(EXIT_FAILURE);
     }
-    pGame->pDungeon->listMap = calloc(1, sizeof(Map) * 1);
-    if (pGame->pDungeon == NULL){
-        fprintf(stderr, "ERROR : Init Dungeon->listMap failed.");
-        exit(EXIT_FAILURE);
-    }
-    pGame->pDungeon->pActualMap = calloc(1, sizeof(Map));
-    if (pGame->pDungeon == NULL){
-        fprintf(stderr, "ERROR : Init Dungeon->pActualMap failed.");
-        exit(EXIT_FAILURE);
-    }
 
-    pGame->pDungeon->pActualMap->rect.h = Random(H_MIN, H_MAX);
-    pGame->pDungeon->pActualMap->rect.w = Random(W_MIN, W_MAX);
+    pGame->UniversMap->rect.h = Random(H_MIN, H_MAX);
+    pGame->UniversMap->rect.w = Random(W_MIN, W_MAX);
 
     if (boolRandom())
         ;
     else
     {
-        int tmp = pGame->pDungeon->pActualMap->rect.h;
-        pGame->pDungeon->pActualMap->rect.h = pGame->pDungeon->pActualMap->rect.w;
-        pGame->pDungeon->pActualMap->rect.w = tmp;
+        int tmp = pGame->UniversMap->rect.h;
+        pGame->UniversMap->rect.h = pGame->UniversMap->rect.w;
+        pGame->UniversMap->rect.w = tmp;
     }
 
     //allocation
-    pGame->pDungeon->pActualMap->Map = (char**)malloc(sizeof(char*) * pGame->pDungeon->pActualMap->rect.h);
-    for (int i = 0; i < pGame->pDungeon->pActualMap->rect.h; ++i)
-        pGame->pDungeon->pActualMap->Map[i] = (char*)malloc(sizeof(char) * pGame->pDungeon->pActualMap->rect.w);
+    pGame->UniversMap->Map = (char**)malloc(sizeof(char*) * pGame->UniversMap->rect.h);
+    for (int i = 0; i < pGame->UniversMap->rect.h; ++i)
+        pGame->UniversMap->Map[i] = (char*)malloc(sizeof(char) * pGame->UniversMap->rect.w);
 
     // insert -- make control of this shit
-    for (int i = 0; i < pGame->pDungeon->pActualMap->rect.h; ++i)
+    for (int i = 0; i < pGame->UniversMap->rect.h; ++i)
     {
-        for (int j = 0; j < pGame->pDungeon->pActualMap->rect.w; ++j)
+        for (int j = 0; j < pGame->UniversMap->rect.w; ++j)
         {
             if (Random(0,100) > 10)
-                pGame->pDungeon->pActualMap->Map[i][j] = ' ';
+                pGame->UniversMap->Map[i][j] = ' ';
             else
-                pGame->pDungeon->pActualMap->Map[i][j] = Random(MIN_PLANET, MAX_PLANET) + '0';
+                pGame->UniversMap->Map[i][j] = Random(MIN_PLANET, MAX_PLANET) + '0';
         }
     }
 
     //displah -> render
-    for (int i = 0; i < pGame->pDungeon->pActualMap->rect.h; ++i)
+    for (int i = 0; i < pGame->UniversMap->rect.h; ++i)
     {
-        printf("%s\n", pGame->pDungeon->pActualMap->Map[i]);
+        printf("%s\n", pGame->UniversMap->Map[i]);
     }
 }
