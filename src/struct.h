@@ -38,8 +38,8 @@ typedef struct AsObject
     char        *asObjName;
     short       nbSite;
 
-    AsObject    *prev;
-    AsObject    *next;
+    void    *prev;
+    void    *next;
 
 } AsObject;
 
@@ -49,20 +49,20 @@ typedef struct System
 
     char        *sysName;
     short       nbAsObject;
-    AsObject    *listAsObject;
+    AsObject    *pListAsObject;
 
-    System      *prev;
-    System      *next;
+    void      *prev;
+    void      *next;
 
 } System;
 
 typedef struct UniversMap
 {
-    SDL_Rect rectMax;
-    SDL_Rect rect;
+    SDL_Rect    rect;
+    System      *pSystemList;
 
-    char **Map;
-    char *representation;
+    char        **Map;
+    char        *representation;
 } UniversMap;
 
 //Convergence

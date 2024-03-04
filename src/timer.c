@@ -42,3 +42,7 @@ int Random (int _iMin, int _iMax){
 int boolRandom(void){
     return(Random(0,1));
 }
+
+char *randSystemName(void){
+    return("Random Name");
+}

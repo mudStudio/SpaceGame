@@ -1,27 +1,29 @@
 #include "init.h"
 
+SDL_Color tmp_color = {0, 0, 0, 255};
+
 void Init(Game *pGame) {
-    /* Init SDL */
+/* Init SDL */
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0){
         fprintf(stderr, "ERROR : SDL initialization failed.");
         exit(EXIT_FAILURE);
     }
     
-    //Init Window
+//Init Window
     pGame->pWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     if (pGame->pWindow == NULL){
         fprintf(stderr, "ERROR : Init Window failed.");
         exit(EXIT_FAILURE);
     }
     
-    //Init Renderer
+//Init Renderer
     pGame->pRenderer = SDL_CreateRenderer(pGame->pWindow, -1 , 0);
     if (pGame->pRenderer == NULL){
         fprintf(stderr, "ERROR : Renderer failed.");
         exit(EXIT_FAILURE);
     }
     
-    //Init Mouse & Keyboard
+/* Init Mouse & Keyboard */
     pGame->pMouse = calloc(1, sizeof(Mouse));
     if (pGame->pMouse == NULL){
         fprintf(stderr, "ERROR : Init Mouse failed.");
@@ -33,45 +35,69 @@ void Init(Game *pGame) {
         exit(EXIT_FAILURE);
     }
 
-    //Init Map
-    pGame->UniversMap = calloc(1, sizeof(Dungeon));
-    if (pGame->UniversMap == NULL){
-        fprintf(stderr, "ERROR : Init Dungeon failed.");
+/* Init UniversMap */
+    pGame->pUniversMap = calloc(1, sizeof(UniversMap));
+    if (pGame->pUniversMap == NULL){
+        fprintf(stderr, "ERROR : Init UniversMap failed.");
         exit(EXIT_FAILURE);
     }
+//fill UniversMap
+    pGame->pUniversMap->rect.h = Random(H_MIN, H_MAX);
+    pGame->pUniversMap->rect.w = Random(W_MIN, W_MAX);
 
-    pGame->UniversMap->rect.h = Random(H_MIN, H_MAX);
-    pGame->UniversMap->rect.w = Random(W_MIN, W_MAX);
+    pGame->pUniversMap->Map = (char**)malloc(sizeof(char*) * pGame->pUniversMap->rect.h);
+    for (int i = 0; i < pGame->pUniversMap->rect.h; ++i)
+        pGame->pUniversMap->Map[i] = (char*)malloc(sizeof(char) * pGame->pUniversMap->rect.w);
 
-    if (boolRandom())
-        ;
-    else
-    {
-        int tmp = pGame->UniversMap->rect.h;
-        pGame->UniversMap->rect.h = pGame->UniversMap->rect.w;
-        pGame->UniversMap->rect.w = tmp;
-    }
-
-    //allocation
-    pGame->UniversMap->Map = (char**)malloc(sizeof(char*) * pGame->UniversMap->rect.h);
-    for (int i = 0; i < pGame->UniversMap->rect.h; ++i)
-        pGame->UniversMap->Map[i] = (char*)malloc(sizeof(char) * pGame->UniversMap->rect.w);
-
-    // insert -- make control of this shit
-    for (int i = 0; i < pGame->UniversMap->rect.h; ++i)
-    {
-        for (int j = 0; j < pGame->UniversMap->rect.w; ++j)
-        {
-            if (Random(0,100) > 10)
-                pGame->UniversMap->Map[i][j] = ' ';
+// insert -- make control of this shit
+    for (int i = 0; i < pGame->pUniversMap->rect.h; ++i){
+        for (int j = 0; j < pGame->pUniversMap->rect.w; ++j){
+            if (Random(0,100) > 10) // -> define.h
+                pGame->pUniversMap->Map[i][j] = ' ';
             else
-                pGame->UniversMap->Map[i][j] = Random(MIN_PLANET, MAX_PLANET) + '0';
+            {
+                pGame->pUniversMap->Map[i][j] = Random(MIN_PLANET, MAX_PLANET) + '0';
+                /*
+                
+                creation d'un system, alloc, tout ça 
+                
+                */
+            }
         }
     }
 
-    //displah -> render
-    for (int i = 0; i < pGame->UniversMap->rect.h; ++i)
-    {
-        printf("%s\n", pGame->UniversMap->Map[i]);
+
+
+//display -> render
+    for (int i = 0; i < pGame->pUniversMap->rect.h; ++i){
+        printf("%s\n", pGame->pUniversMap->Map[i]);
     }
+
+/* Init System */
+    pGame->pUniversMap->pSystemList = calloc(1, sizeof(System));
+    if (pGame->pUniversMap->pSystemList == NULL){
+        fprintf(stderr, "ERROR : Init pSystemList failed.");
+        exit(EXIT_FAILURE);
+    }
+
+    pGame->pUniversMap->pSystemList->sysColor = tmp_color;
+    pGame->pUniversMap->pSystemList->sysName = randSystemName();
+    pGame->pUniversMap->pSystemList->nbAsObject = 0;
+
+    pGame->pUniversMap->pSystemList->prev = NULL;
+    pGame->pUniversMap->pSystemList->next = NULL;
+
+/* Init pListAsObject */
+    pGame->pUniversMap->pSystemList->pListAsObject = calloc(1, sizeof(AsObject));
+    if (pGame->pUniversMap->pSystemList->pListAsObject == NULL){
+        fprintf(stderr, "ERROR : Init pListAsObject failed.");
+        exit(EXIT_FAILURE);
+    }
+    pGame->pUniversMap->pSystemList->pListAsObject->asObjColor = tmp_color;
+    pGame->pUniversMap->pSystemList->pListAsObject->asObjName = randSystemName();
+    pGame->pUniversMap->pSystemList->pListAsObject->nbSite = 0;
+
+    pGame->pUniversMap->pSystemList->pListAsObject->prev = NULL;
+    pGame->pUniversMap->pSystemList->pListAsObject->next = NULL;
+
 }

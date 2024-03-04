@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
         
         renderTimer += deltaTime;
         if (renderTimer >= RENDER_TIMER) {
-            Render(pGame);
+          Render(pGame);
             renderTimer = 0;
         }
         SDL_Delay(1);
@@ -55,62 +55,18 @@ int main(int argc, char** argv) {
 
     //free
     //free à refaire avec un len propre
-    for (int i = 0; i < pGame->UniversMap->rect.y; ++i)
+    for (int i = 0; i < pGame->pUniversMap->rect.y; ++i)
     {
-        if(pGame->UniversMap->Map[i] != NULL)
-        free(pGame->UniversMap->Map[i]);
+        if(pGame->pUniversMap->Map[i] != NULL)
+        free(pGame->pUniversMap->Map[i]);
     }
-    if(pGame->UniversMap->Map != NULL)
-        free(pGame->UniversMap->Map);
+    if(pGame->pUniversMap->Map != NULL)
+        free(pGame->pUniversMap->Map);
 
     //End program
     SDL_DestroyRenderer(pGame->pRenderer);
     SDL_DestroyWindow(pGame->pWindow);
     SDL_Quit();
-
-    //define l, L and malloc it
-/*    int H = Random(H_MIN, H_MAX);
-    int W = Random(W_MIN, W_MAX);
-
-    if (boolRandom())
-        ;
-    else
-    {
-        int tmp = H;
-        H = W;
-        W = tmp;
-    }
-
-    char **Map = (char**)malloc(sizeof(char*) * H);
-    for (int i = 0; i < H; ++i)
-        Map[i] = (char*)malloc(sizeof(char) * W);
-
-    // insert -- make control of this shit
-    for (int i = 0; i < H; ++i)
-    {
-        for (int j = 0; j < W; ++j)
-        {
-            if (Random(0,100) > 10)
-                Map[i][j] = ' ';
-            else
-                Map[i][j] = Random(MIN_PLANET, MAX_PLANET) + '0';
-        }
-    }
-
-    //display -> render
-    for (int i = 0; i < H; ++i)
-    {
-        printf("%s\n", Map[i]);
-    }
-
-    //free à refaire avec un len propre
-    for (int i = 0; i < H; ++i)
-    {
-        if(Map[i] != NULL)
-        free(Map[i]);
-    }
-    if(Map != NULL)
-        free(Map);
-*/
+ 
     return EXIT_SUCCESS;
 }

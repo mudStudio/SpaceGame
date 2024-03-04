@@ -17,6 +17,6 @@ Uint32 Timer(Uint32 deltaTime);
 int my_rand (void);
 int Random (int _iMin, int _iMax);
 int boolRandom(void);
-
+char *randSystemName(void);
 
 #endif // TIMERS_H_INCLUDED

@@ -23,6 +23,8 @@
 #define W_MIN 10
 #define H_MIN 10
 
-//
+/* TAILLE RECT */
+#define RECT_H 25
+#define RECT_W 25
 
 #endif
