@@ -61,7 +61,7 @@ typedef struct UniversMap
     SDL_Rect    rect;
     System      *pSystemList;
 
-    char        **Map;
+    char        ***Map;
     char        *representation;
 } UniversMap;
 

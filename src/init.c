@@ -45,23 +45,33 @@ void Init(Game *pGame) {
     pGame->pUniversMap->rect.h = Random(H_MIN, H_MAX);
     pGame->pUniversMap->rect.w = Random(W_MIN, W_MAX);
 
-    pGame->pUniversMap->Map = (char**)malloc(sizeof(char*) * pGame->pUniversMap->rect.h);
+    pGame->pUniversMap->Map = (char***)malloc(sizeof(char**) * pGame->pUniversMap->rect.h);
     for (int i = 0; i < pGame->pUniversMap->rect.h; ++i)
-        pGame->pUniversMap->Map[i] = (char*)malloc(sizeof(char) * pGame->pUniversMap->rect.w);
+        pGame->pUniversMap->Map[i] = (char**)malloc(sizeof(char*) * pGame->pUniversMap->rect.w);
 
 // insert -- make control of this shit
-    for (int i = 0; i < pGame->pUniversMap->rect.h; ++i){
-        for (int j = 0; j < pGame->pUniversMap->rect.w; ++j){
+    for (int i = 0; i < pGame->pUniversMap->rect.h; ++i)
+    {
+        for (int j = 0; j < pGame->pUniversMap->rect.w; ++j)
+        {
+            int tmp_rand = Random(MIN_PLANET, MAX_PLANET);
+
+            pGame->pUniversMap->Map[i][j] = (char*)malloc(sizeof(char) * (tmp_rand + 1));
+            pGame->pUniversMap->Map[i][j][tmp_rand + 1] = '\0';
+            
             if (Random(0,100) > 10) // -> define.h
-                pGame->pUniversMap->Map[i][j] = ' ';
+            {
+                pGame->pUniversMap->Map[i][j][0] = ' ';
+                for (int k = 1; k <= tmp_rand; ++k)
+                    pGame->pUniversMap->Map[i][j][k] = '\0';
+            }
             else
             {
-                pGame->pUniversMap->Map[i][j] = Random(MIN_PLANET, MAX_PLANET) + '0';
-                /*
+                char tmp_system_nb = Random(MIN_PLANET, tmp_rand) + '0'; // ?
+                pGame->pUniversMap->Map[i][j][0] = tmp_system_nb;
                 
-                creation d'un system, alloc, tout ça 
-                
-                */
+                for (int k = 1; k <= tmp_rand; ++k)
+                    pGame->pUniversMap->Map[i][j][k] = '*'; // --> make random system
             }
         }
     }
@@ -69,8 +79,24 @@ void Init(Game *pGame) {
 
 
 //display -> render
+    printf("\n\t-- Univers Map --\n\n");fflush(stdout);
+    
     for (int i = 0; i < pGame->pUniversMap->rect.h; ++i){
-        printf("%s\n", pGame->pUniversMap->Map[i]);
+        for (int j = 0; j < pGame->pUniversMap->rect.w; ++j)
+        {
+            printf("%c", pGame->pUniversMap->Map[i][j][0]);
+            fflush(stdout);
+        }
+        printf("\n");
+    }
+
+    printf("\n\t-- All System Map --\n\n");fflush(stdout);
+
+    // display term --> [i][j][1]
+    for (int i = 0; i < pGame->pUniversMap->rect.h; ++i){
+        for (int j = 0; j < pGame->pUniversMap->rect.w; ++j)
+            if (pGame->pUniversMap->Map[i][j][0] != ' ')
+                printf("%s\n", pGame->pUniversMap->Map[i][j]);
     }
 
 /* Init System */

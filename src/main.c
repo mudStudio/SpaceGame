@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
         
         renderTimer += deltaTime;
         if (renderTimer >= RENDER_TIMER) {
-          Render(pGame);
+            Render(pGame);
             renderTimer = 0;
         }
         SDL_Delay(1);

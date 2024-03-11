@@ -21,18 +21,21 @@ void RenderGame(Game *pGame)
     {
         for (int j = 0; j < pGame->pUniversMap->rect.w; ++j)
         {
-          if(pGame->pUniversMap->Map[i][j] >= MIN_PLANET + '0' && pGame->pUniversMap->Map[i][j] <= MAX_PLANET + '0')
+            for (int k = 0; k < MAX_PLANET; ++k)
             {
-                dst.x = j * dst.w;
-                dst.y = i * dst.h;
-                detect_color_system(pGame, pGame->pUniversMap->Map[i][j]);
-                SDL_RenderFillRect(pGame->pRenderer, &dst);
+              if(pGame->pUniversMap->Map[i][j][0] >= MIN_PLANET + '0' && pGame->pUniversMap->Map[i][j][0] <= MAX_PLANET + '0')
+                {
+                    dst.x = j * dst.w;
+                    dst.y = i * dst.h;
+                    detect_color_system(pGame, pGame->pUniversMap->Map[i][j][0]);
+                    SDL_RenderFillRect(pGame->pRenderer, &dst);
+                }
             }
         }
     }
 }
 
-void detect_color_system(Game *pGame, char c)
+void detect_color_system(Game *pGame, char c) // --> swich case, stupid !
 {
     if (c == '0')
         SDL_SetRenderDrawColor(pGame->pRenderer,255,255,0,255);
