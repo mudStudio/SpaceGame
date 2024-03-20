@@ -17,4 +17,9 @@
 
 void Init(Game *pGame);
 
+char    InitMapSystem();
+
+System *CreateSystem(System *prev, System *next);
+
+
 #endif // INIT_H_INCLUDED

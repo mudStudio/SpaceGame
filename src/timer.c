@@ -46,3 +46,7 @@ int boolRandom(void){
 char *randSystemName(void){
     return("Random Name");
 }
+
+char *randObjName(void){
+    return("Random Name");
+}

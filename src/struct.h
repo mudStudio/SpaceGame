@@ -31,39 +31,44 @@ typedef struct Keyboard {
 } Keyboard;
 
 //Software
-typedef struct AsObject
+typedef struct CelestObject
 {
-    SDL_Color   asObjColor;
+    SDL_Color       celestObjColor;
 
-    char        *asObjName;
-    short       nbSite;
+    char            *celestObjName;
+    unsigned int    nbSite;
 
-    void    *prev;
-    void    *next;
 
-} AsObject;
+    void            *prev;
+    void            *next;
+
+} CelestObject;
 
 typedef struct System
 {
-    SDL_Color   sysColor;
+    SDL_Color       sysColor;
 
-    char        *sysName;
-    short       nbAsObject;
-    AsObject    *pListAsObject;
+    char            *sysName;
+    unsigned int    nbCelestObject;
+    CelestObject    *pListCelestObject;
+    
+    unsigned int    P;
+    unsigned int    S;
+    unsigned int    A;
 
-    void      *prev;
-    void      *next;
+    void            *prev;
+    void            *next;
 
 } System;
 
-typedef struct UniversMap
+typedef struct Univers
 {
     SDL_Rect    rect;
     System      *pSystemList;
 
     char        ***Map;
     char        *representation;
-} UniversMap;
+} Univers;
 
 //Convergence
 typedef struct Game {
@@ -72,7 +77,7 @@ typedef struct Game {
     Mouse *pMouse;
     Keyboard *pKeyboard;
 
-    UniversMap *pUniversMap;
+    Univers *pUnivers;
 } Game;
 
 #endif // STRUCT_H_INCLUDED

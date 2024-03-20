@@ -53,16 +53,16 @@ int main(int argc, char** argv) {
         SDL_Delay(1);
     }
 
-    //free
+/*  //free
     //free à refaire avec un len propre
-    for (int i = 0; i < pGame->pUniversMap->rect.y; ++i)
+    for (int i = 0; i < pGame->pUnivers->rect.y; ++i)
     {
-        if(pGame->pUniversMap->Map[i] != NULL)
-        free(pGame->pUniversMap->Map[i]);
+        if(pGame->pUnivers->Map[i] != NULL)
+        free(pGame->pUnivers->Map[i]);
     }
-    if(pGame->pUniversMap->Map != NULL)
-        free(pGame->pUniversMap->Map);
-
+    if(pGame->pUnivers->Map != NULL)
+        free(pGame->pUnivers->Map);
+*/
     //End program
     SDL_DestroyRenderer(pGame->pRenderer);
     SDL_DestroyWindow(pGame->pWindow);

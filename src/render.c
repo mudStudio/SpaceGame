@@ -17,17 +17,17 @@ void RenderGame(Game *pGame)
     init_RenderRect(&dst);
     // Color 
     
-    for (int i = 0; i < pGame->pUniversMap->rect.h ; ++i)
+    for (int i = 0; i < pGame->pUnivers->rect.h ; ++i)
     {
-        for (int j = 0; j < pGame->pUniversMap->rect.w; ++j)
+        for (int j = 0; j < pGame->pUnivers->rect.w; ++j)
         {
             for (int k = 0; k < MAX_PLANET; ++k)
             {
-              if(pGame->pUniversMap->Map[i][j][0] >= MIN_PLANET + '0' && pGame->pUniversMap->Map[i][j][0] <= MAX_PLANET + '0')
+              if(pGame->pUnivers->Map[i][j][0] >= MIN_PLANET + '0' && pGame->pUnivers->Map[i][j][0] <= MAX_PLANET + '0')
                 {
                     dst.x = j * dst.w;
                     dst.y = i * dst.h;
-                    detect_color_system(pGame, pGame->pUniversMap->Map[i][j][0]);
+                    detect_color_system(pGame, pGame->pUnivers->Map[i][j][0]);
                     SDL_RenderFillRect(pGame->pRenderer, &dst);
                 }
             }

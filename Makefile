@@ -33,18 +33,18 @@ LIB = -Linclude/SDL2 -lmingw32 -lib/lSDL2main -lib/SlSDL2
 all: $(NAME)
 
 $(NAME): 
-	gcc $(SRCDIR) -o $(NAME).exe -I include/SDL2 -L lib -lmingw32 -lSDL2main -lSDL2.dll
-	$(NAME).exe
+	@gcc $(SRCDIR) -o $(NAME).exe -I include/SDL2 -L lib -lmingw32 -lSDL2main -lSDL2.dll
+	@$(NAME).exe
 
 %.o: %.c
 #	$(info Compiling $< into $@)
-	$(CC) $(CFLAGS) -c $(call FixPath, $<) -o $(call FixPath, $@) $(call FixPath, $(SDLPATH))
+	@$(CC) $(CFLAGS) -c $(call FixPath, $<) -o $(call FixPath, $@) $(call FixPath, $(SDLPATH))
 
 clean:
-	$(DEL) $(call FixPath, $(OBJ))
+	@$(DEL) $(call FixPath, $(OBJ))
 
 fclean: clean
-	$(DEL) $(call FixPath, $(NAME)$(EXT))
+	@$(DEL) $(call FixPath, $(NAME)$(EXT))
 
 re: fclean all
 
