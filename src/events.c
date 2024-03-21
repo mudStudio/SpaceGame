@@ -1,4 +1,4 @@
-#include "events.h"
+#include "../inc/SG/events.h"
 
 int Events(Game *pGame) {
 

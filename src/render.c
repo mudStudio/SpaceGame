@@ -1,4 +1,4 @@
-#include "render.h"
+#include "../inc/SG/render.h"
 
 void Render(Game *pGame) {
     SDL_SetRenderDrawColor(pGame->pRenderer,0,0,0,255);

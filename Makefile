@@ -1,10 +1,10 @@
 # GENERIC
 NAME = SpaceGame
 CC = gcc
-CFLAGS = -Wall #-Wextra
+CFLAGS = -Wall -Wextra -Werror
 
 # INCLUDES
-#INC = 
+INC = include/SG/
 
 # SOURCES
 SRCDIR =	$(wildcard src/*.c)
@@ -50,8 +50,8 @@ re: fclean all
 
 # linux rules
 linux:
-	@$(CC) $(CFLAGS) src/*.c -lm -o $(NAME) `sdl2-config --cflags --libs` 
-	@./$(NAME)
+	$(CC) $(CFLAGS) src/*.c -lm -o $(NAME) `sdl2-config --cflags --libs` 
+	./$(NAME)
 
 linuxClean:
 	@rm -rf *.o

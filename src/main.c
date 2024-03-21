@@ -10,16 +10,16 @@
 #endif
 
 //Local includes
-#include "define.h"
-#include "struct.h"
-#include "timer.h"
-#include "events.h"
-#include "init.h"
-#include "update.h"
-#include "render.h"
+#include "../inc/SG/define.h"
+#include "../inc/SG/struct.h"
+#include "../inc/SG/timer.h"
+#include "../inc/SG/events.h"
+#include "../inc/SG/init.h"
+#include "../inc/SG/update.h"
+#include "../inc/SG/render.h"
 
 
-int main(int argc, char** argv) {
+int main(void) {
     
     //Master Object creation & init
     Game *pGame = calloc(1, sizeof(Game));  
@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
 
         updateTimer += deltaTime;
         if (updateTimer >= UPDATE_TIMER) {
-            Update(pGame, updateTimer);
+            //Update(pGame, updateTimer);
             updateTimer = 0;
         }
         

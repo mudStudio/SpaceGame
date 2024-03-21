@@ -1,4 +1,4 @@
-#include "timer.h"
+#include "../inc/SG/timer.h"
 
 Uint32 Timer(Uint32 deltaTime) {
     Uint32 currentTick = SDL_GetTicks();
@@ -34,6 +34,10 @@ int my_rand (void){
    tab[index] = rand();
    return (rn);
 }
+
+/*void InitRandSeed(char *seed){
+    ;
+}*/
 
 int Random (int _iMin, int _iMax){
     return (_iMin + (my_rand () % (_iMax-_iMin+1)));

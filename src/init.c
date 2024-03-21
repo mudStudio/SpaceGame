@@ -1,4 +1,4 @@
-#include "init.h"
+#include "../inc/SG/init.h"
 
 SDL_Color tmp_color = {0, 0, 0, 255};
 int total_planet = 0;
@@ -37,6 +37,9 @@ void Init(Game *pGame) {
         fprintf(stderr, "ERROR : Init Keyboard failed.");
         exit(EXIT_FAILURE);
     }
+
+/* INIT SEED */
+//    InitRandSeed(seed)
 
 /* Init Univers */
     pGame->pUnivers = calloc(1, sizeof(Univers));
@@ -129,19 +132,19 @@ void Init(Game *pGame) {
     }
     pGame->pUnivers->pSystemList = tmp;
 
-    printf("\nCreation of %d news systems with %d Planet(s), %d Satelites and %d Asteroïds.\n", len, total_planet, total_satelite, total_asteroid);fflush(stdout);
+    printf("\nCreation of %d news systems with %d Planet(s), %d Satelites and %d Asteroïds.\n", \
+        len, total_planet, total_satelite, total_asteroid);fflush(stdout);
 
 /*    while(pGame->pUnivers->pSystemList != NULL)
     {
         printf("%s\n", pGame->pUnivers->pSystemList->sysName);
         pGame->pUnivers->pSystemList = pGame->pUnivers->pSystemList->next;
     }
-    pGame->pUnivers->pSystemList = tmp;*/
-
+    pGame->pUnivers->pSystemList = tmp;
+*/
 }
 
-char    InitMapSystem()
-{
+char    InitMapSystem(){
     int tmp_object = Random(0,2);
     
     if(tmp_object == 0)
@@ -151,8 +154,7 @@ char    InitMapSystem()
     if(tmp_object == 2)
         return 'P';
     else
-        return '*';
-}
+        return '*';}
 
 System *CreateSystem(System *prev, System *next)
 {
