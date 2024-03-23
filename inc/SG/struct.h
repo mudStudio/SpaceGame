@@ -51,10 +51,6 @@ typedef struct System
     char            *sysName;
     unsigned int    nbCelestObject;
     CelestObject    *pListCelestObject;
-    
-    unsigned int    P;
-    unsigned int    S;
-    unsigned int    A;
 
     void            *prev;
     void            *next;

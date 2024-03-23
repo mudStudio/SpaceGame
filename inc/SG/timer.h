@@ -10,6 +10,7 @@
 #endif
 
 #include <time.h>
+#include <stdbool.h>
 #include "define.h"
 
 Uint32 Timer(Uint32 deltaTime);
