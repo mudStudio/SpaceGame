@@ -15,7 +15,6 @@ void RenderGame(Game *pGame)
     SDL_Rect dst;
 
     init_RenderRect(&dst);
-    // Color 
     
     for (int i = 0; i < pGame->pUnivers->rect.h ; ++i)
     {

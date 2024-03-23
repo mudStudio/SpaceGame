@@ -47,101 +47,17 @@ void Init(Game *pGame) {
         fprintf(stderr, "ERROR : Init Univers failed.");
         exit(EXIT_FAILURE);
     }
-//fill Univers
-    pGame->pUnivers->rect.h = Random(H_MIN, H_MAX);
-    pGame->pUnivers->rect.w = Random(W_MIN, W_MAX);
-
-    pGame->pUnivers->Map = (char***)malloc(sizeof(char**) * (pGame->pUnivers->rect.h + 1));
-    for (int i = 0; i < pGame->pUnivers->rect.h; ++i)
-        pGame->pUnivers->Map[i] = (char**)malloc(sizeof(char*) * (pGame->pUnivers->rect.w + 1));
-
-// insert -- make control of this shit
-    for (int i = 0; i < pGame->pUnivers->rect.h; ++i)
-    {
-        for (int j = 0; j < pGame->pUnivers->rect.w; ++j)
-        {
-            int tmp_rand = Random(MIN_PLANET, MAX_PLANET);
-
-            pGame->pUnivers->Map[i][j] = (char*)malloc(sizeof(char) * (tmp_rand + 1));
-            pGame->pUnivers->Map[i][j][tmp_rand + 1] = '\0';
-            
-            if (Random(0,100) > 10) // -> define.h
-            {
-                pGame->pUnivers->Map[i][j][0] = ' ';
-                for (int k = 1; k <= tmp_rand; ++k)
-                    pGame->pUnivers->Map[i][j][k] = '\0';
-            }
-            else
-            {
-                char tmp_system_nb = Random(MIN_PLANET, tmp_rand) + '0'; // ?
-                pGame->pUnivers->Map[i][j][0] = tmp_system_nb;
-                
-                /** FILL SYSTEM WITH OBJECTS **/
-                for (int k = 1; k <= tmp_rand; ++k)
-                {
-                    pGame->pUnivers->Map[i][j][k] = InitMapSystem();
-                    if(pGame->pUnivers->Map[i][j][k] == 'P')
-                        total_planet += 1;
-                    else if(pGame->pUnivers->Map[i][j][k] == 'S')
-                        total_satelite += 1;
-                    else if(pGame->pUnivers->Map[i][j][k] == 'A')
-                        total_asteroid += 1;
-                }
-            }
-        }
-    }
-
-
-//display -> render
-    printf("\n\t-- Univers Map --\n\n");fflush(stdout);
+    //fill Univers
+    InitFillUnivers(pGame->pUnivers, true);
     
-    for (int i = 0; i < pGame->pUnivers->rect.h; ++i){
-        for (int j = 0; j < pGame->pUnivers->rect.w; ++j)
-        {
-            printf("%c", pGame->pUnivers->Map[i][j][0]);
-            fflush(stdout);
-        }
-        printf("\n");
-    }
-
-    printf("\n\t-- All System Map --\n\n");fflush(stdout);
-
-    // display term --> [i][j][0]
-    for (int i = 0; i < pGame->pUnivers->rect.h; ++i){
-        for (int j = 0; j < pGame->pUnivers->rect.w; ++j)
-            if (pGame->pUnivers->Map[i][j][0] != ' '){
-                printf("%s\n", pGame->pUnivers->Map[i][j]);
-            }
-    }
+    //display -> Term
+    displayUniversMapTerm(pGame->pUnivers);
 
 /* Init System */
-    pGame->pUnivers->pSystemList = CreateSystem(NULL, NULL);
+    InitSystem(pGame->pUnivers);
 
-    int len = 1;
-
-    System *tmp = pGame->pUnivers->pSystemList;
-
-    for (int i = 0; i < pGame->pUnivers->rect.h; ++i){
-        for (int j = 0; j < pGame->pUnivers->rect.w; ++j)
-            if (pGame->pUnivers->Map[i][j][0] != ' ')
-                {
-                    len++;
-                    pGame->pUnivers->pSystemList->next = CreateSystem(pGame->pUnivers->pSystemList, NULL);
-                    pGame->pUnivers->pSystemList = pGame->pUnivers->pSystemList->next;
-                }
-    }
-    pGame->pUnivers->pSystemList = tmp;
-
-    printf("\nCreation of %d news systems with %d Planet(s), %d Satelites and %d Asteroïds.\n", \
-        len, total_planet, total_satelite, total_asteroid);fflush(stdout);
-
-/*    while(pGame->pUnivers->pSystemList != NULL)
-    {
-        printf("%s\n", pGame->pUnivers->pSystemList->sysName);
-        pGame->pUnivers->pSystemList = pGame->pUnivers->pSystemList->next;
-    }
-    pGame->pUnivers->pSystemList = tmp;
-*/
+/* Init Celestes Objects */
+    InitSystemObject(pGame->pUnivers);
 }
 
 char    InitMapSystem(){
@@ -156,8 +72,58 @@ char    InitMapSystem(){
     else
         return '*';}
 
-System *CreateSystem(System *prev, System *next)
-{
+void    InitFillUnivers(Univers *pUnivers, bool randlen){
+
+    if(randlen){
+        pUnivers->rect.h = Random(H_MIN, H_MAX);
+        pUnivers->rect.w = Random(W_MIN, W_MAX);
+    }
+    else{
+        pUnivers->rect.h = H_MAX;
+        pUnivers->rect.w = W_MAX;
+    }
+
+    pUnivers->Map = (char***)malloc(sizeof(char**) * (pUnivers->rect.h + 1));
+    for (int i = 0; i < pUnivers->rect.h; ++i)
+        pUnivers->Map[i] = (char**)malloc(sizeof(char*) * (pUnivers->rect.w + 1));
+
+    // insert -- make control of this shit
+    for (int i = 0; i < pUnivers->rect.h; ++i)
+    {
+        for (int j = 0; j < pUnivers->rect.w; ++j)
+        {
+            int tmp_rand = Random(MIN_PLANET, MAX_PLANET);
+
+            pUnivers->Map[i][j] = (char*)malloc(sizeof(char) * (tmp_rand + 1));
+            pUnivers->Map[i][j][tmp_rand + 1] = '\0';
+            
+            if (Random(0,100) > 10) // -> define.h
+            {
+                pUnivers->Map[i][j][0] = ' ';
+                for (int k = 1; k <= tmp_rand; ++k)
+                    pUnivers->Map[i][j][k] = '\0';
+            }
+            else
+            {
+                char tmp_system_nb = Random(MIN_PLANET, tmp_rand) + '0'; // ?
+                pUnivers->Map[i][j][0] = tmp_system_nb;
+                
+                /** FILL SYSTEM WITH OBJECTS **/
+                for (int k = 1; k <= tmp_rand; ++k)
+                {
+                    pUnivers->Map[i][j][k] = InitMapSystem();
+                    if(pUnivers->Map[i][j][k] == 'P')
+                        total_planet += 1;
+                    else if(pUnivers->Map[i][j][k] == 'S')
+                        total_satelite += 1;
+                    else if(pUnivers->Map[i][j][k] == 'A')
+                        total_asteroid += 1;
+                }
+            }
+        }
+    }}
+
+System  *CreateSystem(System *prev, System *next){
     System *tmpNewSystem = calloc(1, sizeof(System));
     if (tmpNewSystem == NULL){
     fprintf(stderr, "ERROR : Create tmpNewSystemList failed.");
@@ -169,10 +135,6 @@ System *CreateSystem(System *prev, System *next)
     tmpNewSystem->nbCelestObject = 1;
     tmpNewSystem->pListCelestObject = NULL; // Create Object
 
-    tmpNewSystem->P = 0;
-    tmpNewSystem->S = 0;
-    tmpNewSystem->A = 0;
-
     if(prev)
         tmpNewSystem->prev = prev;
     else
@@ -183,5 +145,28 @@ System *CreateSystem(System *prev, System *next)
     else
         tmpNewSystem->next = NULL;
 
-    return(tmpNewSystem);
+    return(tmpNewSystem);}
+
+void    InitSystem(Univers *pUnivers){
+    pUnivers->pSystemList = CreateSystem(NULL, NULL);
+
+    int nb_system = 1;
+    System *tmp = pUnivers->pSystemList;
+
+    for (int i = 0; i < pUnivers->rect.h; ++i){
+        for (int j = 0; j < pUnivers->rect.w; ++j)
+            if (pUnivers->Map[i][j][0] != ' ')
+                {
+                    nb_system++;
+                    pUnivers->pSystemList->next = CreateSystem(pUnivers->pSystemList, NULL);
+                    pUnivers->pSystemList = pUnivers->pSystemList->next;
+                }
+    }
+    pUnivers->pSystemList = tmp;
+
+    printf("\nCreation of %d news systems with %d Planet(s), %d Satelite(s) and %d Asteroïd(s).\n", \
+        nb_system, total_planet, total_satelite, total_asteroid);fflush(stdout);}
+
+void    InitSystemObject(pGame->pUnivers){
+    pUnivers->pSystemList->pListCelestObject = CreateCelectObject(NULL, NULL);
 }
